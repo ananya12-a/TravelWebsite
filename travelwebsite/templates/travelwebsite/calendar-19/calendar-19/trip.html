@@ -1,0 +1,277 @@
+{% extends "travelwebsite/calendar-19/calendar-19/base.html" %}
+
+{% block content %}
+    {% load static %}
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" type="text/css">  
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet" type="text/css">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500&display=swap" rel="stylesheet" type="text/css">
+
+
+    <link rel="stylesheet" href="{% static 'travelwebsite/fonts/icomoon/style.css' %}">
+
+    <link href="{% static 'travelwebsite/fullcalendar/packages/core/main.css' %}" rel='stylesheet'/>
+    <link href="{% static 'travelwebsite/fullcalendar/packages/daygrid/main.css' %}" rel='stylesheet'/>
+
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'travelwebsite/css/bootstrap.min.css' %}">
+
+    <!-- Style -->
+    <link rel="stylesheet" href="{% static 'travelwebsite/css/style.css' %}">
+
+    <body class="bg-gradient-to-b from-purple-400 via-pink-300 to-white min-h-screen overflow-y-auto">
+
+        <nav class="border-gray-200 bg-gray-50 dark:bg-gray-900 fixed w-full top-0 start-0 border-b border-gray-200 dark:border-gray-700">
+            <div class="flex items-center justify-between mx-auto p-3 mr-3 ml-3"> 
+                <a href="{% url 'my_profile' %}" class="flex items-center space-x-3">
+                    <img src="https://cdn-icons-png.flaticon.com/512/3125/3125914.png" class="h-6 md:h-8" alt="Travelwebsite Logo"> <!-- Reduced image height -->
+                    <span class="text-lg md:text-2xl font-semibold text-gray-900 dark:text-white">Travel Website</span> <!-- Reduced text size -->
+                </a>
+                <button type="button" class="md:hidden inline-flex items-center p-2 w-8 h-8 justify-center text-sm text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-expanded="false"> <!-- Reduced button size -->
+                    <span class="sr-only">Open main menu</span>
+                    <svg class="w-4 h-4" aria-hidden="true" fill="none" viewBox="0 0 17 14" stroke="currentColor"> <!-- Reduced SVG size -->
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
+                    </svg>
+                </button>
+                <ul class="hidden md:flex md:items-center md:space-x-4 text-sm md:text-base text-gray-900 dark:text-white"> <!-- Reduced font size and spacing -->
+                    <a href="{% url 'my_profile' %}" class="block py-2 px-2 md:px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-pink-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">{{request.user.first_name}} {{request.user.last_name}}</a>
+                    <a href="{% url 'logout' %}" class="block py-2 px-2 md:px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-pink-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Logout</a>
+                </ul>
+            </div>
+        </nav>
+        
+        
+        <div class="mt-5">
+            <div class="mt-1 flex justify-center items-center flex-col">
+                <p style="font-family: 'Inter', sans-serif;
+                        font-size: 5rem;
+                        font-weight: 700;
+                        color: #ffffff;
+                        text-shadow: 2px 2px 2px #c4d9fb;
+                        letter-spacing: 0.05em;
+                        line-height: 1.4;
+                        margin-top: 20px;
+                        margin-bottom: 30px;">
+                    Let the trip begin!!!
+                </p>
+            </div>
+        
+            {% if error %}
+                <div class="flex items-center p-4 mb-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 dark:border-red-800" role="alert">
+                    <svg class="w-4 h-4 flex-shrink-0 me-3" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+                    </svg>
+                    <span class="font-medium">{{ error }}</span>
+                </div>
+            {% endif %}
+        
+            <div class="flex p-15 ml-10 mr-20">
+                <div class="w-1/2 p-5">
+                    <div class="bg-white p-6 mt-6 rounded-lg shadow-lg">
+                        <div class="data_single_entry">
+                            <div id="location"></div>
+                        </div>
+            
+                        <div class="projects_data">
+                            <div class="data">
+                                <div class="flex justify-between items-center" style="color: black;">
+                                    <div id="start_date_cont"></div>
+                                    <div id="end_date_cont"></div>
+                                </div>
+                            </div>
+                        </div>
+            
+                        <div class="projects_data">
+                            <div class="data">
+                                <div class="flex justify-between items-center">
+                                    <div id="origin_airport"></div>
+                                    <div id="dest_airport"></div>
+                                </div>
+                            </div>
+                        </div>
+            
+                        <div class="data_single_entry">
+                            <div id="flights"></div>
+                        </div>
+            
+                        <div class="data_single_entry">
+                            <div id="budget"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="w-1/2 p-5 bg-white rounded-lg shadow-lg">
+                    <form action="{% url 'edit-trip' trip_id %}" method="POST">
+                        <div class="projects_data">
+                                <div class="data">
+                                <h4>Start Date</h4>
+                                <p>{{trip_form.start_date}}</p>
+                                </div>
+                                <div class="data">
+                                <h4>End Date</h4>
+                                <p>{{trip_form.end_date}}</p>
+                            </div>
+                        </div>
+        
+                        <div class="projects_data">
+                            <div class="data">
+                                <h4>Origin Airport</h4>
+                                <p>{{trip_form.origin_airport}}</p>
+                            </div>
+                            <div class="data">
+                                <h4>Destination Airport</h4>
+                                <p>{{trip_form.destination_airport}}</p>
+                            </div>
+                        </div>
+        
+                        <div class="projects_data">
+                            <div class="data">
+                                <h4>Location</h4>
+                                <p>{{trip_form.location}}</p>
+                            </div>
+        
+                            <div class="data">
+                                <h4>Cost</h4>
+                                <p>{{trip_form.cost}}</p>
+                            </div>
+                        </div>
+        
+                        {% csrf_token %}
+                        <div class="mt-5 flex justify-center">
+                            <button type="submit" id="id_add_trip_button" class="bg-purple-500 py-3 px-4 text-center text-white inline-block">Edit Trip</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="flex p-5">
+                <div class=outer_div>
+                    <div class="bg-white rounded-lg shadow-lg mt-10" style="height: fit-content;">
+                        <div id="itinerary" style="color: black; width: 100%; padding: 30px 25px;"></div>
+                    </div>
+                </div>
+
+                <div class="w-2/3 p-6 mt-16 flex flex-col">
+                    <div id="calendar" class="h-96"></div>
+                </div>
+
+            </div>
+
+            <div class="mt-60 mr-20 ml-20 w-5/6 flex justify-center">
+                <form action="{% url 'add_activity' trip_id %}" method="POST" class="bg-white p-6 rounded-lg shadow-lg w-3/4 mt-40 flex justify-center items-center">
+                    <div class="m-0">
+                        <label for="date" class="m-0">Date</label> 
+                        <p class="mt-0 mb-0 ml-3">{{activity_form.date}}</p>
+                    </div>
+            
+                    <div class="m-0">
+                        <label for="start_time" class="m-0">Start Time</label>
+                        <p class="mt-0 mr-0 mb-0 ml-3">{{activity_form.start_time}}</p>
+                    </div>
+                    <div class="m-0">
+                        <label for="end_time" class="m-0">End Time</label>
+                        <p class="mt-0 mb-0 ml-3">{{activity_form.end_time}}</p>
+                    </div>
+            
+                    <div class="m-0">
+                        <label for="activity_type" class="m-0">Activity Type</label>
+                        <p class="mt-0 mb-0 ml-3">{{activity_form.activity_type}}</p>
+                    </div>
+            
+                    <div class="m-0">
+                        <label for="location" class="m-0">Location</label>
+                        <p class="mt-0 mb-0 ml-3">{{activity_form.location}}</p>
+                    </div>
+            
+                    <div class="m-0">
+                        <label for="cost" class="m-0">Cost</label>
+                        <p class="mt-0 mb-0 ml-3 mr-3 ">{{activity_form.cost}}</p>
+                    </div>
+            
+                    {% csrf_token %}
+                    <div class="mt-1 flex justify-center">
+                        <button type="submit" id="id_add_trip_button" class="bg-purple-500 py-3 px-4 text-center text-white inline-block">Add activity</button>
+                    </div>
+                </form>
+            </div>
+            
+    
+            <div class="m-10 flex justify-center flex-col bg-white p-8 rounded-lg shadow-lg mt-40">
+                <form action="{% url 'add_collaborator' trip_id %}" method="POST" class="w-full">
+                    <div class="data">
+                        <h4>Invite Collaborator with their email:</h4>
+                        <input type="email" name="collaborator_email" class="border border-gray-400 py-1 px-2 w-full rounded-md my-3 mb-3" placeholder="Enter email" required>
+                    </div>
+                    {% csrf_token %}
+                    <div class="flex justify-center mb-5 mt-3">
+                        <button type="submit" id="id_add_follower_button" class="bg-purple-500 py-3 px-4 text-center text-white inline-block">Invite Collaborator</button>
+                    </div>
+                </form>
+                <div class="flex justify-center items-center flex-col">
+                    <h4 class="text-center" style="font-size: 30px;">Followers:</h4>
+                    <div id="trip_followers" class="text-center" style="font-size: 18px; margin: 0">
+                    </div>
+                </div>
+            </div>
+        
+
+        
+        <script>
+            var csrfToken = "{{ csrf_token }}";
+        
+            var currentUrl = window.location.href;
+            var lastPart = currentUrl.substring(currentUrl.lastIndexOf('/') + 1);
+            
+            var cal_events = null;
+            window.onload = function() {
+                cal_events = loadPage(lastPart);
+                var calendarEl = document.getElementById('calendar');
+                while (calendarEl.hasChildNodes()) {
+                    calendarEl.firstChild.remove()
+                }
+                console.log("inside listener", cal_events);
+                var calendar = new FullCalendar.Calendar(calendarEl, {
+                    plugins: [ 'interaction', 'dayGrid' ],
+                    defaultDate: '2024-04-12',
+                    editable: true,
+                    eventLimit: true, // allow "more" link when too many events
+                    events: cal_events
+                });
+                calendar.render();
+            };
+        
+            window.setInterval(function() {
+                cal_events = loadPage(lastPart);
+                console.log("events in js", cal_events);
+        
+                var calendarEl = document.getElementById('calendar');
+                while (calendarEl.hasChildNodes()) {
+                    calendarEl.firstChild.remove()
+                }
+                var calendar = new FullCalendar.Calendar(calendarEl, {
+                    plugins: [ 'interaction', 'dayGrid' ],
+                    defaultDate: '2024-04-12',
+                    editable: true,
+                    eventLimit: true, // allow "more" link when too many events
+                    events: cal_events,
+                    eventResizableFromStart: true, // Enable resizing from the start time
+                    eventOverlap: false, // Prevent events from overlapping
+                    
+                });
+                calendar.render();                
+            }, 5000);
+        
+        </script>
+        
+        {% load static %}
+        <script src="{% static 'travelwebsite/js/jquery-3.3.1.min.js' %}"></script>
+        <script src="{% static 'travelwebsite/js/popper.min.js' %}"></script>
+        <script src="{% static 'travelwebsite/js/bootstrap.min.js' %}"></script>
+        <script src="{% static 'travelwebsite/fullcalendar/packages/core/main.js' %}"></script>
+        <script src="{% static 'travelwebsite/fullcalendar/packages/interaction/main.js' %}"></script>
+        <script src="{% static 'travelwebsite/fullcalendar/packages/daygrid/main.js' %}"></script>
+        <script src="{% static 'travelwebsite/js/main.js' %}"></script>
+        </body>
+
+{% endblock %}

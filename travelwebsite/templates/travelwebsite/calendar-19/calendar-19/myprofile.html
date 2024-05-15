@@ -1,0 +1,178 @@
+{% extends "travelwebsite/calendar-19/calendar-19/base.html" %}
+
+{% block content %}
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">  
+    <nav class="border-gray-200 bg-gray-50 dark:bg-gray-900 fixed w-full top-0 start-0 border-b border-gray-200 dark:border-gray-700">
+        <div class="flex flex-wrap items-center justify-between mx-auto p-7">
+            <a href="{% url 'my_profile' %}" class="flex items-center space-x-3">
+                <img src="https://cdn-icons-png.flaticon.com/512/3125/3125914.png" class="h-8" alt="Travelwebsite Logo">
+                <span class="text-2xl font-semibold text-gray-900 dark:text-white">Travel Website</span>
+            </a>
+            <button type="button" class="md:hidden inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-expanded="false">
+                <span class="sr-only">Open main menu</span>
+                <svg class="w-5 h-5" aria-hidden="true" fill="none" viewBox="0 0 17 14" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
+                </svg>
+            </button>
+            <ul class="hidden md:flex md:items-center md:space-x-8 text-gray-900 dark:text-white">
+                <a href="{% url 'my_profile' %}" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-pink-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">{{request.user.first_name}} {{request.user.last_name}}</a>
+                <a href="{% url 'logout' %}" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-pink-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Logout</a>
+            </ul>
+        </div>
+    </nav>
+
+    {% load static %}
+        <div class="wrapper">
+            <div class="left">   
+                <div class="profile-info text-5xl">
+                    <h3>{{request.user.first_name}} {{request.user.last_name}}</h3>
+                </div>
+            </div>
+
+            <div class="right">
+                <div class="info">
+                    <h3>Information</h3>
+                    <div class="info_data">
+                         <div class="data">
+                            <h4>Username</h4>
+                            <p>{{request.user.username}}</p>
+                         </div>
+                         <div class="data">
+                            <h4>Email</h4>
+                            <p>{{request.user.email}}</p>
+                      </div>
+                    </div>
+                </div>
+              
+                <div class="projects mt-8">
+                    <h3>New Trip</h3>
+    
+                    {% if error %}
+                        <div class="flex items-center p-4 mb-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 dark:border-red-800" role="alert">
+                            <svg class="inline w-4 h-4 mr-2 flex-shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+                            </svg>
+                            <span class="font-medium">{{ error }}</span>
+                        </div>
+                    {% endif %}
+
+                    
+                    <form action="{% url 'my_profile' %}" method="post">
+                        <div class="projects_data">
+                                <div class="data">
+                                <h4>Start Date</h4>
+                                <p>{{trip_form.start_date}}</p>
+                                </div>
+                                <div class="data">
+                                <h4>End Date</h4>
+                                <p>{{trip_form.end_date}}</p>
+                            </div>
+                        </div>
+        
+                        <div class="projects_data">
+                            <div class="data">
+                                <h4>Origin Airport</h4>
+                                <p>{{trip_form.origin_airport}}</p>
+                            </div>
+                            <div class="data">
+                                <h4>Destination Airport</h4>
+                                <p>{{trip_form.destination_airport}}</p>
+                            </div>
+                        </div>
+        
+                        <div class="data">
+                            <h4>Location</h4>
+                            <p>{{trip_form.location}}</p>
+                        </div>
+        
+                        <div class="data">
+                            <h4>Cost</h4>
+                            <p>{{trip_form.cost}}</p>
+                        </div>
+        
+                        {% csrf_token %}
+                        <div class="mt-5 flex justify-center">
+                            <button type="submit" id="id_add_trip_button" class="bg-purple-500 py-3 px-4 text-center text-white inline-block">Add Trip</button>
+                        </div>
+                    </form>
+                    
+                
+                <div class="projects">
+                    <h3>Saved Trips</h3>
+                    {% for t in profile.trips.all %}
+                        <div class="trip_box hover:bg-gray-200 transition-colors duration-300 ease-in-out">
+                            <div class="projects_data">
+                                <div class="data">
+                                    <h4>Start Date</h4>
+                                    <p>{{t.start_date}}</p>
+                                </div>
+                                <div class="data">
+                                    <div class="flex justify-between items-center">
+                                        <h4>End Date</h4>
+                                        <div class="buttons-container flex items-center">
+                                            <form action="{% url 'show_trip' t.id %}" method="POST">
+                                                {% csrf_token %}
+                                                <button type="submit" class="icon-button edit-icon" title="Edit">
+                                                    <svg class="w-6 h-6 text-gray-800 dark:text-white mr-2 icon-button edit-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                                                        <path fill-rule="evenodd" d="M11.32 6.176H5c-1.105 0-2 .949-2 2.118v10.588C3 20.052 3.895 21 5 21h11c1.105 0 2-.948 2-2.118v-7.75l-3.914 4.144A2.46 2.46 0 0 1 12.81 16l-2.681.568c-1.75.37-3.292-1.263-2.942-3.115l.536-2.839c.097-.512.335-.983.684-1.352l2.914-3.086Z" clip-rule="evenodd"/>
+                                                        <path fill-rule="evenodd" d="M19.846 4.318a2.148 2.148 0 0 0-.437-.692 2.014 2.014 0 0 0-.654-.463 1.92 1.92 0 0 0-1.544 0 2.014 2.014 0 0 0-.654.463l-.546.578 2.852 3.02.546-.579a2.14 2.14 0 0 0 .437-.692 2.244 2.244 0 0 0 0-1.635ZM17.45 8.721 14.597 5.7 9.82 10.76a.54.54 0 0 0-.137.27l-.536 2.84c-.07.37.239.696.588.622l2.682-.567a.492.492 0 0 0 .255-.145l4.778-5.06Z" clip-rule="evenodd"/>
+                                                    </svg>
+                                                </button>
+                                            </form>
+
+                                            <form action="{% url 'delete_trip' t.id %}" method="POST">
+                                                {% csrf_token %}
+                                                <button type="submit" class="icon-button trash-icon" title="Delete">
+                                                    <svg class="w-6 h-6 text-gray-800 dark:text-white ml-2 icon-button trash-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                                                        <path fill-rule="evenodd" d="M8.586 2.586A2 2 0 0 1 10 2h4a2 2 0 0 1 2 2v2h3a1 1 0 1 1 0 2v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8a1 1 0 0 1 0-2h3V4a2 2 0 0 1 .586-1.414ZM10 6h4V4h-4v2Zm1 4a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Zm4 0a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Z" clip-rule="evenodd"/>
+                                                    </svg>
+                                                </button>
+                                            </form>
+                                        </div>  
+                                    </div>
+                                    <p>{{t.end_date}}</p>                            
+                                </div>
+                            </div>
+    
+                            <div class="projects_data">
+                                <div class="data">
+                                    <h4>Origin Airport</h4>
+                                    <p>{{t.origin_airport}}</p>
+                                </div>
+                                <div class="data">
+                                    <h4>Destination Airport</h4>
+                                    <p>{{t.destination_airport}}</p>
+                                </div>
+                            </div>
+    
+                            <div class="data_single_entry">
+                                <h4>Location</h4>
+                                <p class="same_color">{{t.location}}</p>
+                            </div>
+    
+                            <div class="data_single_entry">
+                                <h4>Cost</h4>
+                                <p class="same_color">{{t.cost}}</p>
+                            </div>
+                        </div> 
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </form>
+
+{% endblock %}
+
+{% if error %}
+    <div class="error">
+        {{error}}
+    </div>
+{% endif %}
+
+<script>
+    window.onload = loadPage;
+
+    // ... also call getList every 5 seconds hereafter to update the list
+    window.setInterval(loadPage, 5000);
+
+</script>

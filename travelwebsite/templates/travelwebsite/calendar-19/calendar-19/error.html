@@ -1,0 +1,41 @@
+{% extends "travelwebsite/calendar-19/calendar-19/base.html" %}
+
+{% block content %}
+<body style="background-image: linear-gradient(180deg, #9F7AEA, #FEE2FE); min-height: 100vh; overflow-y: auto;">
+    <div class="mt-20 flex justify-center items-center flex-col">
+        {% if error %}
+            <p style="font-family: 'Inter', sans-serif;
+                    font-size: 6rem;
+                    font-weight: 700;
+                    color: #ffffff;
+                    text-shadow: 2px 2px 2px #ff3826;
+                    letter-spacing: 0.05em;
+                    line-height: 1.4;
+                    margin-top: 20px;
+                    margin-bottom: 30px;">
+                {{ error }}
+            </p>
+        {% endif %}
+
+        {% if link %}
+            {% if link == 'show_trip' %}
+                {% if trip_id %}
+                    <a id="id_nav_profile" href="{% url 'show_trip' trip_id %}" style="font-size: 2rem; text-decoration: none;" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">
+                        Click <span style="text-decoration: underline; color: blue;">here</span> to go back to your trip page.
+                    </a>
+                {% else %}
+                    <p>Missing trip_id to generate the link.</p>
+                {% endif %}
+            {% elif link == 'login' %}
+                <a id="id_nav_profile" href="{% url 'login' %}" style="font-size: 2rem; text-decoration: none;" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">
+                    Click <span style="text-decoration: underline; color: blue;">here</span> to go back to the login page.
+                </a>
+            {% else %}
+                <a id="id_nav_profile" href="{% url 'my_profile' %}" style="font-size: 2rem; text-decoration: none;" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">
+                    Click <span style="text-decoration: underline; color: blue;">here</span> to go back to your profile page.
+                </a>
+            {% endif %}
+        {% endif %}
+    </div>
+</body>
+{% endblock %}

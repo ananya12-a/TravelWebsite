@@ -1,0 +1,149 @@
+/* App.css */
+body, html, div {
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  margin: 0% 2%;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-entry {
+  width: 50%;
+  margin: 2%;
+}
+
+.register-entry {
+  width: 30%;
+  margin: 1%;
+}
+
+.alert {
+  max-width: 30%; /* Set maximum width */
+  margin: 0 auto; /* Center horizontally */
+}
+
+#root {
+  display: flex;
+  justify-content: center; /* Center the content horizontally */
+  align-items: center; /* Center the content vertically */
+  width: 100vw; /* Full width of the viewport */
+  height: 100vh; /* Full height of the viewport */
+}
+
+/* App.css */
+.container {
+  display: flex;
+}
+
+.left-half {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+}
+
+.right-half {
+  width: 50%;
+}
+
+.login-container {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+}
+
+.register-container {
+  display: flex;
+  width: 100vw;
+}
+
+.heading {
+  width: 100%; /* Take up 50% of the available space */
+  display: flex;
+  justify-content: center;
+  margin: 2% 0%;
+  font-size: 2em; 
+}
+
+.subheading {
+  width: 100%; /* Take up 50% of the available space */
+  display: flex;
+  justify-content: center;
+  margin: 2% 0%;
+}
+
+.login-container {
+  width: 50%; /* Take up 50% of the available space */
+  padding-left: 20px; /* Add padding for better spacing */
+}
+
+.list-group {
+  width: 100%; /* Take up 100% of the available space */
+  display: flex; /* Enable flexbox layout */
+  justify-content: center;
+  align-items: center; /* Center the items vertically */
+  flex-direction: column; /* Display items in a vertical list */
+}
+
+.list-group-item {
+  width: 100%; /* Take up 100% of the available space */
+  display: flex; /* Enable flexbox layout */
+  flex-direction: column; /* Display items in a vertical list */
+  align-items: center; /* Center the items vertically */
+}
+
+/* Add additional styles as needed */
+
+/* Add additional styles as needed */
+
+
+/* #root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+ */

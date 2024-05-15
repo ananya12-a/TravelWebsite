@@ -1,0 +1,33 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        {% load static %}
+        <link href="{% static 'travelwebsite/base.css' %}" rel="stylesheet" type="text/css">
+        <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+        <title>{% block title %}Travel Website{% endblock %}</title>
+        <script src="{% static 'travelwebsite/travelwebsite.js' %}"></script>
+    </head>
+
+    <body>
+        <div class="content_info">
+            <!-- <div id="id_site_name">
+                {% block id_header_div %}
+                {% endblock %}
+            </div> -->
+    
+            {% if message %}
+                <div class="message">
+                    {{message}}
+                </div>
+            {% endif %}
+    
+            <div class="content">
+                {% block content %}
+                {% endblock %}
+            </div>
+        </div>
+    </body>
+    
+</html>
